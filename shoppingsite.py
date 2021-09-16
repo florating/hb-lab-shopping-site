@@ -77,11 +77,13 @@ def show_shopping_cart():
     #
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
+    
+
 
     return render_template("cart.html")
 
 
-@app.route("/add_to_cart/<melon_id>")
+@app.route("/add_to_cart/<melon_id>", methods=['GET'])
 def add_to_cart(melon_id):
     """Add a melon to cart and redirect to shopping cart page.
 
@@ -89,6 +91,7 @@ def add_to_cart(melon_id):
     page and display a confirmation message: 'Melon successfully added to
     cart'."""
 
+    
     # TODO: Finish shopping cart functionality
 
     # The logic here should be something like:
@@ -100,7 +103,22 @@ def add_to_cart(melon_id):
     # - flash a success message
     # - redirect the user to the cart page
 
-    return "Oops! This needs to be implemented!"
+    if 'cart' not in session:
+        session['cart'] = {}
+
+    if melon_id not in session['cart']:
+        session['cart'][melon_id] = 0
+    session['cart'][melon_id] += 1
+    flash('Your melon was added to the cart.')
+
+    # if melon is not in cart:
+        # create a new melon_id key with value of 0
+    # increment melon_id key by 1
+        
+    # melon_id = 'cren'
+    # session = {'cart': {'alib':1, 'cren':1}}
+
+    return redirect('/cart')
 
 
 @app.route("/login", methods=["GET"])
