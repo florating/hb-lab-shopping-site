@@ -78,9 +78,27 @@ def show_shopping_cart():
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
     
+    # session --> <SecureCookieSession {'cart': {'arkb': 1}}>
+    # cart_dict --> {'arkb': 1, 'cren':2}
+    # cart_dict['arkb'] --> return the value of 1
 
+    cart_dict = session['cart']
+    cart_list = []
+    total_price = 0
+    # for loop through cart_dict for each melon id
+    for melon_id in cart_dict:
+        # retrieve Melon object using get_by_id fxn
+        melon = melons.get_by_id(melon_id)
+        # add qty, total price attributes to the Melon obj
+        melon_price = melon.price   # float
+        qty = cart_dict[melon_id]
+        # add Melon obj to cart list
+        cart_list.append(melon)
+        # add total price for that melon type to a running total cost for the order
+        total_price += melon_price
+    # pass the list and order total through to the Jinja template
 
-    return render_template("cart.html")
+    return render_template("cart.html", session=session, order_total=total_price, cart_list=cart_list)
 
 
 @app.route("/add_to_cart/<melon_id>", methods=['GET'])

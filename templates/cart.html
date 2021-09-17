@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block body %}
-
+    <!-- loop over the list:
+            for each Melon, display all the relevant info
+            display the total cost of the order -->
     <table class="table table-striped mt-3">
         <thead>
         <tr>
@@ -40,7 +42,9 @@
     </table>
 
     <h3>Total: $27.00</h3>
-
+    <br>session ----> {{ session }}
+    <br>order_total -----> {{ order_total }}
+    <br>cart_list -----> {{ cart_list }}
     <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
 
 {% endblock %}
